@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import Employee, Attendance, Task, LeaveRequest
 from django.contrib.auth.password_validation import validate_password
+from django.contrib.auth import get_user_model
 
 class EmployeeSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
@@ -42,3 +43,33 @@ class LeaveRequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = LeaveRequest
         fields = ['id', 'employee', 'start_date', 'end_date', 'reason', 'status', 'applied_on']
+
+from rest_framework import serializers
+from django.contrib.auth import get_user_model
+from django.contrib.auth.password_validation import validate_password
+
+Employee = get_user_model()
+
+class RegisterSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True, validators=[validate_password])
+    is_staff = serializers.BooleanField(default=False, required=False)
+    is_superuser = serializers.BooleanField(default=False, required=False)
+
+    class Meta:
+        model = Employee
+        fields = ['email', 'username', 'password', 'full_name', 'is_staff', 'is_superuser']
+
+    def create(self, validated_data):
+        user = Employee.objects.create_user(
+            email=validated_data['email'],
+            username=validated_data['username'],
+            full_name=validated_data.get('full_name', ''),
+            password=validated_data['password'],
+        )
+
+        # handle roles
+        user.is_staff = validated_data.get('is_staff', False)
+        user.is_superuser = validated_data.get('is_superuser', False)
+        user.save()
+
+        return user

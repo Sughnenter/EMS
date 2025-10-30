@@ -1,5 +1,6 @@
 from django.urls import path, include
 from . import views
+from rest_framework_simplejwt.views import TokenObtainPairView,TokenRefreshView
 
 
 app_name = 'employee'
@@ -14,4 +15,7 @@ urlpatterns = [
     path('attendance/<int:pk>/', views.AttendanceDetailView.as_view(), name='attendance-detail'),
     path('leaves/', views.LeaveListView.as_view(), name='leave-list'),
     path('leaves/<int:pk>/', views.LeaveDetailView.as_view(), name='leave-detail'),
+    path('tasks/', views.TaskListView.as_view(), name='task-list'),
+    path('tasks/<int:pk>/', views.TaskDetailView.as_view(), name='task-detail'),
+
 ]
