@@ -46,7 +46,7 @@ function ProtectedRoute({ children }) {
     if(IsAuthorized === null){ //initial state
         return <div>Loading...</div>
     } 
-    return IsAuthorized ? children : <navigate to="/login"/> //if authorized, render children, else redirect to login
+    return IsAuthorized ? children : <Navigate to="/login"/> //if authorized, render children, else redirect to login
 }
 
 export default ProtectedRoute

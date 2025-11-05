@@ -42,7 +42,7 @@ export default function AdminAttendance() {
       <div className="flex flex-col items-center justify-center h-screen bg-gray-900 text-red-400 text-lg">
         {error}
         <button
-          onClick={() => navigate("/home")}
+          onClick={() => navigate("/")}
           className="mt-4 bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg"
         >
           Go Home
@@ -56,7 +56,7 @@ export default function AdminAttendance() {
       {/* Navbar */}
       <nav className="flex justify-between items-center mb-8 border-b border-gray-700 pb-4">
         <h1
-          onClick={() => navigate("/home")}
+          onClick={() => navigate("/")}
           className="text-2xl font-bold text-blue-400 cursor-pointer"
         >
           EMS Admin Panel
